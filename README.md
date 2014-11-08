@@ -1,4 +1,4 @@
 Hadoop
 ======
 
-MapReduce 
+Simple MapReduce 

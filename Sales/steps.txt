@@ -1,0 +1,28 @@
+1.) Create hdfs folder "hdfssales-ip"
+	hadoop fs -mkdir hdfssales-ip
+
+2.) Copy the file purchases.txt to HDFS folder hdfssales-ip
+
+	hadoop fs -put purchases.txt hdfssales-ip
+
+2.) Check if output folder does not exist
+	hadoop fs -ls 
+	
+	#salesbyregion-op should not be present
+
+3.) Export SalesByRegion.jar to ~/Documents folder
+
+4.) Go to ~/Documents folder and run
+	cd  ~/Documents
+	hadoop jar SalesByRegion.jar SalesByRegion hdfssales-ip salesbyregion-op
+
+5.) Check the output folder is created
+	hadoop fs -ls salesbyregion-op
+	# check for three files _SUCCESS, _logs, part-r-00000
+	
+6.) Print the output
+	hadoop fs -tail salesbyregion-op/part-r-00000
+	hadoop fs -cat salesbyregion-op/part-r-00000
+	
+
+	

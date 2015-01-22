@@ -1,0 +1,164 @@
+[cloudera@quickstart ~]$ cd Desktop
+[cloudera@quickstart Desktop]$ dir
+CM.desktop  Eclipse.desktop  file.txt  hadoop-2.6.0-src
+[cloudera@quickstart Desktop]$ pwd
+/home/cloudera/Desktop
+[cloudera@quickstart Desktop]$ ^C
+[cloudera@quickstart Desktop]$ gedit maxfrequent.java
+[cloudera@quickstart Desktop]$ ls
+CM.desktop  Eclipse.desktop  file.txt  hadoop-2.6.0-src  maxfrequent.java  WordCount.jar
+[cloudera@quickstart Desktop]$ javac -cp `hadoop classpath` -d hd word.java 
+javac: file not found: word.java
+Usage: javac <options> <source files>
+use -help for a list of possible options
+[cloudera@quickstart Desktop]$ javac -cp `hadoop classpath` -d hd maxfrequent.java
+javac: directory not found: hd
+Usage: javac <options> <source files>
+use -help for a list of possible options
+[cloudera@quickstart Desktop]$ mkdir maxi
+[cloudera@quickstart Desktop]$ javac -cp `hadoop classpath` -d maxi  maxfrequent.java
+[cloudera@quickstart Desktop]$ ls /maxi
+ls: cannot access /maxi: No such file or directory
+[cloudera@quickstart Desktop]$ dir
+CM.desktop  Eclipse.desktop  file.txt  hadoop-2.6.0-src  maxfrequent.java  maxfrequent.java~  maxi  WordCount.jar
+[cloudera@quickstart Desktop]$ jar -cvf maxi.jar -C maxi/
+Usage: jar {ctxui}[vfm0Me] [jar-file] [manifest-file] [entry-point] [-C dir] files ...
+Options:
+    -c  create new archive
+    -t  list table of contents for archive
+    -x  extract named (or all) files from archive
+    -u  update existing archive
+    -v  generate verbose output on standard output
+    -f  specify archive file name
+    -m  include manifest information from specified manifest file
+    -e  specify application entry point for stand-alone application 
+        bundled into an executable jar file
+    -0  store only; use no ZIP compression
+    -M  do not create a manifest file for the entries
+    -i  generate index information for the specified jar files
+    -C  change to the specified directory and include the following file
+If any file is a directory then it is processed recursively.
+The manifest file name, the archive file name and the entry point name are
+specified in the same order as the 'm', 'f' and 'e' flags.
+
+Example 1: to archive two class files into an archive called classes.jar: 
+       jar cvf classes.jar Foo.class Bar.class 
+Example 2: use an existing manifest file 'mymanifest' and archive all the
+           files in the foo/ directory into 'classes.jar': 
+       jar cvfm classes.jar mymanifest -C foo/ .
+
+[cloudera@quickstart Desktop]$ jar -cvf maxi.jar -C maxi/ .
+added manifest
+adding: maxfrequent$TokenizerMapper.class(in = 1742) (out= 757)(deflated 56%)
+adding: maxfrequent.class(in = 1496) (out= 805)(deflated 46%)
+adding: maxfrequent$IntSumReducer.class(in = 1745) (out= 740)(deflated 57%)
+[cloudera@quickstart Desktop]$ ls
+CM.desktop  Eclipse.desktop  file.txt  hadoop-2.6.0-src  maxfrequent.java  maxfrequent.java~  maxi  maxi.jar  WordCount.jar
+[cloudera@quickstart Desktop]$ hdfs dfs -mkdir /maxi
+[cloudera@quickstart Desktop]$ hdfs dfs -put file.txt /maxi
+[cloudera@quickstart Desktop]$ hadoop maxi.jar maxfrequent /maxi /maxi/op1
+Error: Could not find or load main class maxi.jar
+[cloudera@quickstart Desktop]$ hadoop jar  maxi.jar maxfrequent /maxi /maxi/op1
+15/01/22 07:04:33 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+15/01/22 07:04:34 WARN mapreduce.JobSubmitter: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+15/01/22 07:04:34 INFO input.FileInputFormat: Total input paths to process : 1
+15/01/22 07:04:34 INFO mapreduce.JobSubmitter: number of splits:1
+15/01/22 07:04:35 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1421862093461_0002
+15/01/22 07:04:35 INFO impl.YarnClientImpl: Submitted application application_1421862093461_0002
+15/01/22 07:04:35 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1421862093461_0002/
+15/01/22 07:04:35 INFO mapreduce.Job: Running job: job_1421862093461_0002
+15/01/22 07:04:48 INFO mapreduce.Job: Job job_1421862093461_0002 running in uber mode : false
+15/01/22 07:04:48 INFO mapreduce.Job:  map 0% reduce 0%
+15/01/22 07:05:02 INFO mapreduce.Job:  map 100% reduce 0%
+15/01/22 07:05:15 INFO mapreduce.Job:  map 100% reduce 100%
+15/01/22 07:05:16 INFO mapreduce.Job: Job job_1421862093461_0002 completed successfully
+15/01/22 07:05:16 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=102424
+		FILE: Number of bytes written=416027
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=165914
+		HDFS: Number of bytes written=75285
+		HDFS: Number of read operations=6
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=1
+		Launched reduce tasks=1
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=11651
+		Total time spent by all reduces in occupied slots (ms)=10214
+		Total time spent by all map tasks (ms)=11651
+		Total time spent by all reduce tasks (ms)=10214
+		Total vcore-seconds taken by all map tasks=11651
+		Total vcore-seconds taken by all reduce tasks=10214
+		Total megabyte-seconds taken by all map tasks=11930624
+		Total megabyte-seconds taken by all reduce tasks=10459136
+	Map-Reduce Framework
+		Map input records=3028
+		Map output records=25091
+		Map output bytes=259338
+		Map output materialized bytes=102424
+		Input split bytes=110
+		Combine input records=25091
+		Combine output records=6860
+		Reduce input groups=6860
+		Reduce shuffle bytes=102424
+		Reduce input records=6860
+		Reduce output records=6860
+		Spilled Records=13720
+		Shuffled Maps =1
+		Failed Shuffles=0
+		Merged Map outputs=1
+		GC time elapsed (ms)=203
+		CPU time spent (ms)=3970
+		Physical memory (bytes) snapshot=349392896
+		Virtual memory (bytes) snapshot=1702223872
+		Total committed heap usage (bytes)=219480064
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=165804
+	File Output Format Counters 
+		Bytes Written=75285
+[cloudera@quickstart Desktop]$ hdfs dfs -ls /maxi/op1
+Found 2 items
+-rw-r--r--   1 cloudera supergroup          0 2015-01-22 07:05 /maxi/op1/_SUCCESS
+-rw-r--r--   1 cloudera supergroup      75285 2015-01-22 07:05 /maxi/op1/part-r-00000
+[cloudera@quickstart Desktop]$ hdfs dfs -ls /maxi/op1
+
+
+[cloudera@quickstart Desktop]$ hdfs dfs -ls /maxi/op1
+Found 2 items
+-rw-r--r--   1 cloudera supergroup          0 2015-01-22 07:05 /maxi/op1/_SUCCESS
+-rw-r--r--   1 cloudera supergroup      75285 2015-01-22 07:05 /maxi/op1/part-r-00000
+[cloudera@quickstart Desktop]$ hdfs dfs -ls /maxi/op1/ppart-r-00000
+^C[cloudera@quickstart Desktop]$ hdfs dfs -cat  /maxi/op1/ppart-r-00000 | head -n 10
+cat: `/maxi/op1/ppart-r-00000': No such file or directory
+[cloudera@quickstart Desktop]$ hdfs dfs -cat  /maxi/op1/part-r-00000 | head -n 10
+"Defects,"	1
+"Information	1
+"Plain	2
+"Project	5
+"Right	1
+#48037]	1
+$5,000)	1
+'17).	1
+'AS-IS'	1
+'s	1
+cat: Unable to write to output stream.
+[cloudera@quickstart Desktop]$ 
+
+
+
+*************up simple word coubnt ***************
+
+
+

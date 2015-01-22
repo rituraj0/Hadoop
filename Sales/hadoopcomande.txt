@@ -1,0 +1,440 @@
+cloudera@localhost ~]$ ls haddop/
+purchases.txt  WarAndPeace.txt
+[cloudera@localhost ~]$ ls -ln haddop/
+total 209580
+-rwxr-xr-x 1 500 500 211312924 Sep  9  2013 purchases.txt
+-rwxr-xr-x 1 500 500   3291648 Nov  6 19:25 WarAndPeace.txt
+[cloudera@localhost ~]$ haddop fs -ls
+bash: haddop: command not found
+[cloudera@localhost ~]$ hadoop fs -ls
+
+[cloudera@localhost ~]$ 
+[cloudera@localhost ~]$ hadoop fs -mkdir hdfsgoup
+[cloudera@localhost ~]$ hadoop fs -ls
+Found 1 items
+drwxr-xr-x   - cloudera cloudera          0 2014-11-07 22:57 hdfsgoup
+[cloudera@localhost ~]$ cd hadoop fs 
+bash: cd: hadoop: No such file or directory
+[cloudera@localhost ~]$ ls
+datasets  Documents  eclipse  goup       Music     Public     Videos
+Desktop   Downloads  lib      haddop  Pictures  Templates  workspace
+[cloudera@localhost ~]$ cd mmetup-d
+bash: cd: mmetup-d: No such file or directory
+[cloudera@localhost ~]$ cd haddop/
+[cloudera@localhost haddop]$ hadoop fs -put * hdfsgoup
+
+
+
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ hadoop fs -lsr
+lsr: DEPRECATED: Please use 'ls -R' instead.
+drwxr-xr-x   - cloudera cloudera          0 2014-11-07 23:01 hdfsgoup
+-rw-r--r--   3 cloudera cloudera    3291648 2014-11-07 23:01 hdfsgoup/WarAndPeace.txt
+-rw-r--r--   3 cloudera cloudera  211312924 2014-11-07 23:01 hdfsgoup/purchases.txt
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ ls
+purchases.txt  WarAndPeace.txt
+[cloudera@localhost haddop]$ hadoop fs head -n /user/cloudera/hdfsgoup/*
+head: Unknown command
+[cloudera@localhost haddop]$ hadoop fs -head -n /user/cloudera/hdfsgoup/* 
+-head: Unknown command
+[cloudera@localhost haddop]$ hadoop fs cat -n /user/cloudera/hdfsgoup/* | head -n 5
+cat: Unknown command
+Did you mean -cat?  This command begins with a dash.
+[cloudera@localhost haddop]$ hadoop fs cat  /user/cloudera/hdfsgoup/* | head 
+cat: Unknown command
+Did you mean -cat?  This command begins with a dash.
+[cloudera@localhost haddop]$ hadoop fs -cat  /user/cloudera/hdfsgoup/* | head 
+The Project Gutenberg EBook of War and Peace, by Leo Tolstoy
+
+This eBook is for the use of anyone anywhere at no cost and with almost
+no restrictions whatsoever.  You may copy it, give it away or re-use it
+under the terms of the Project Gutenberg License included with this
+eBook or online at www.gutenberg.org
+
+
+Title: War and Peace
+
+cat: Unable to write to output stream.
+cat: Unable to write to output stream.
+[cloudera@localhost haddop]$ hadoop fs -cat  /user/cloudera/hdfsgoup/* | head -n 5
+The Project Gutenberg EBook of War and Peace, by Leo Tolstoy
+
+This eBook is for the use of anyone anywhere at no cost and with almost
+no restrictions whatsoever.  You may copy it, give it away or re-use it
+under the terms of the Project Gutenberg License included with this
+cat: Unable to write to output stream.
+cat: Unable to write to output stream.
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ hadoop fs -cat  /user/cloudera/hdfsgoup/wasrAndPeace.txt | head -n 5
+cat: `/user/cloudera/hdfsgoup/wasrAndPeace.txt': No such file or directory
+[cloudera@localhost haddop]$ hadoop fs -cat  /user/cloudera/hdfsgoup/WarAndPeace.txt | head -n 5
+The Project Gutenberg EBook of War and Peace, by Leo Tolstoy
+
+This eBook is for the use of anyone anywhere at no cost and with almost
+no restrictions whatsoever.  You may copy it, give it away or re-use it
+under the terms of the Project Gutenberg License included with this
+cat: Unable to write to output stream.
+[cloudera@localhost haddop]$ hadoop fs -rm  /user/cloudera/hdfsgoup/WarAndPeace.txt
+Moved: 'hdfs://localhost.localdomain:8020/user/cloudera/hdfsgoup/WarAndPeace.txt' to trash at: hdfs://localhost.localdomain:8020/user/cloudera/.Trash/Current
+[cloudera@localhost haddop]$ ^C
+[cloudera@localhost haddop]$ hadoop fsck  /user/cloudera/hdfsgoup/purchases.txt
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+Connecting to namenode via http://localhost.localdomain:50070
+FSCK started by cloudera (auth:SIMPLE) from /127.0.0.1 for path /user/cloudera/hdfsgoup/purchases.txt at Fri Nov 07 23:11:24 PST 2014
+.
+/user/cloudera/hdfsgoup/purchases.txt:  Under replicated BP-587708527-127.0.0.1-1401664487572:blk_4470202067093999579_1296. Target Replicas is 3 but found 1 replica(s).
+
+/user/cloudera/hdfsgoup/purchases.txt:  Under replicated BP-587708527-127.0.0.1-1401664487572:blk_-7357917305592070316_1297. Target Replicas is 3 but found 1 replica(s).
+Status: HEALTHY
+ Total size:	211312924 B
+ Total dirs:	0
+ Total files:	1
+ Total blocks (validated):	2 (avg. block size 105656462 B)
+ Minimally replicated blocks:	2 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	2 (100.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	3
+ Average block replication:	1.0
+ Corrupt blocks:		0
+ Missing replicas:		4 (66.666664 %)
+ Number of data-nodes:		1
+ Number of racks:		1
+FSCK ended at Fri Nov 07 23:11:24 PST 2014 in 69 milliseconds
+
+
+The filesystem under path '/user/cloudera/hdfsgoup/purchases.txt' is HEALTHY
+[cloudera@localhost haddop]$ hadoop fs -cat  /user/cloudera/hdfsgoup/WarAndPeace.txt | tail -n 5
+
+This Web site includes information about Project Gutenberg-tm, including
+how to make donations to the Project Gutenberg Literary Archive
+Foundation, how to help produce our new eBooks, and how to subscribe to
+our email newsletter to hear about new eBooks.
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ hadoop fs -ls /etc/hadoop/
+ls: `/etc/hadoop/': No such file or directory
+[cloudera@localhost haddop]$ hadoop fs -ls etc
+ls: `etc': No such file or directory
+[cloudera@localhost haddop]$ hadoop fs -put purchases.txt hdfssales-ip
+
+
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ 
+[cloudera@localhost haddop]$ hadoop fs -ls /etc/hadoop/
+
+
+[cloudera@localhost ~]$ cd /etc/hadoop/conf
+
+
+cloudera@localhost haddop]$ cd
+[cloudera@localhost ~]$ ls
+datasets  Documents  eclipse  goup       Music     Public     Videos
+Desktop   Downloads  lib      haddop  Pictures  Templates  workspace
+[cloudera@localhost ~]$ ls | grep "*jar"
+[cloudera@localhost ~]$ cd Desktop/
+[cloudera@localhost Desktop]$ ls
+Eclipse.desktop  sales.jar
+[cloudera@localhost Desktop]$ hadoop jar SalesByRegion.jar SalesByRegion hdfssales-ip salesbyregion-op
+Exception in thread "main" java.io.IOException: Error opening job jar: SalesByRegion.jar
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:135)
+Caused by: java.util.zip.ZipException: error in opening zip file
+	at java.util.zip.ZipFile.open(Native Method)
+	at java.util.zip.ZipFile.<init>(ZipFile.java:127)
+	at java.util.jar.JarFile.<init>(JarFile.java:135)
+	at java.util.jar.JarFile.<init>(JarFile.java:72)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:133)
+[cloudera@localhost Desktop]$ hadoop fs -mkdir hdfssales-ip
+
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ hadoop fs -ls 
+Found 3 items
+drwx------   - cloudera cloudera          0 2014-11-07 23:10 .Trash
+drwxr-xr-x   - cloudera cloudera          0 2014-11-07 23:12 hdfsgoup
+drwxr-xr-x   - cloudera cloudera          0 2014-11-07 23:49 hdfssales-ip
+[cloudera@localhost Desktop]$ ls
+Eclipse.desktop  sales.jar
+[cloudera@localhost Desktop]$ hadoop jar SalesByRegion.jar SalesByRegion hdfssales-ip salesbyregion2-op
+Exception in thread "main" java.io.IOException: Error opening job jar: SalesByRegion.jar
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:135)
+Caused by: java.util.zip.ZipException: error in opening zip file
+	at java.util.zip.ZipFile.open(Native Method)
+	at java.util.zip.ZipFile.<init>(ZipFile.java:127)
+	at java.util.jar.JarFile.<init>(JarFile.java:135)
+	at java.util.jar.JarFile.<init>(JarFile.java:72)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:133)
+[cloudera@localhost Desktop]$ hadoop jar sales.jar SalesByRegion hdfssales-ip salesbyregion2-op
+
+
+14/11/07 23:55:51 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+14/11/07 23:55:59 INFO input.FileInputFormat: Total input paths to process : 1
+14/11/07 23:56:40 INFO mapred.JobClient: Running job: job_201411072154_0001
+14/11/07 23:56:43 INFO mapred.JobClient:  map 0% reduce 0%
+
+
+
+
+
+
+
+
+14/11/08 00:06:06 INFO mapred.JobClient:  map 1% reduce 0%
+14/11/08 00:06:17 INFO mapred.JobClient:  map 7% reduce 0%
+14/11/08 00:06:22 INFO mapred.JobClient:  map 9% reduce 0%
+14/11/08 00:06:37 INFO mapred.JobClient:  map 11% reduce 0%
+14/11/08 00:06:43 INFO mapred.JobClient:  map 12% reduce 0%
+14/11/08 00:06:57 INFO mapred.JobClient:  map 36% reduce 0%
+14/11/08 00:06:59 INFO mapred.JobClient:  map 43% reduce 0%
+14/11/08 00:07:01 INFO mapred.JobClient:  map 45% reduce 0%
+14/11/08 00:07:02 INFO mapred.JobClient:  map 48% reduce 0%
+14/11/08 00:07:05 INFO mapred.JobClient:  map 49% reduce 0%
+14/11/08 00:07:11 INFO mapred.JobClient:  map 53% reduce 0%
+14/11/08 00:07:14 INFO mapred.JobClient:  map 58% reduce 0%
+14/11/08 00:07:25 INFO mapred.JobClient:  map 66% reduce 0%
+14/11/08 00:07:28 INFO mapred.JobClient:  map 71% reduce 0%
+14/11/08 00:07:31 INFO mapred.JobClient:  map 74% reduce 0%
+14/11/08 00:07:34 INFO mapred.JobClient:  map 77% reduce 0%
+14/11/08 00:07:37 INFO mapred.JobClient:  map 81% reduce 0%
+14/11/08 00:07:52 INFO mapred.JobClient:  map 83% reduce 0%
+14/11/08 00:07:53 INFO mapred.JobClient:  map 86% reduce 0%
+14/11/08 00:08:01 INFO mapred.JobClient:  map 88% reduce 0%
+14/11/08 00:08:08 INFO mapred.JobClient:  map 90% reduce 0%
+14/11/08 00:08:10 INFO mapred.JobClient:  map 93% reduce 0%
+14/11/08 00:08:13 INFO mapred.JobClient:  map 100% reduce 0%
+14/11/08 00:11:16 INFO mapred.JobClient:  map 100% reduce 17%
+14/11/08 00:11:20 INFO mapred.JobClient:  map 100% reduce 33%
+14/11/08 00:11:29 INFO mapred.JobClient:  map 100% reduce 67%
+14/11/08 00:11:42 INFO mapred.JobClient:  map 100% reduce 68%
+14/11/08 00:11:45 INFO mapred.JobClient:  map 100% reduce 72%
+14/11/08 00:11:48 INFO mapred.JobClient:  map 100% reduce 78%
+14/11/08 00:12:17 INFO mapred.JobClient:  map 100% reduce 100%
+14/11/08 00:13:49 INFO mapred.JobClient: Job complete: job_201411072154_0001
+14/11/08 00:14:05 INFO mapred.JobClient: Counters: 32
+14/11/08 00:14:08 INFO mapred.JobClient:   File System Counters
+14/11/08 00:14:08 INFO mapred.JobClient:     FILE: Number of bytes read=45249745
+14/11/08 00:14:08 INFO mapred.JobClient:     FILE: Number of bytes written=68071107
+14/11/08 00:14:08 INFO mapred.JobClient:     FILE: Number of read operations=0
+14/11/08 00:14:08 INFO mapred.JobClient:     FILE: Number of large read operations=0
+14/11/08 00:14:08 INFO mapred.JobClient:     FILE: Number of write operations=0
+14/11/08 00:14:08 INFO mapred.JobClient:     HDFS: Number of bytes read=211378738
+14/11/08 00:14:08 INFO mapred.JobClient:     HDFS: Number of bytes written=2158
+14/11/08 00:14:08 INFO mapred.JobClient:     HDFS: Number of read operations=11
+14/11/08 00:14:08 INFO mapred.JobClient:     HDFS: Number of large read operations=0
+14/11/08 00:14:08 INFO mapred.JobClient:     HDFS: Number of write operations=4
+14/11/08 00:14:08 INFO mapred.JobClient:   Job Counters 
+14/11/08 00:14:09 INFO mapred.JobClient:     Launched map tasks=2
+14/11/08 00:14:09 INFO mapred.JobClient:     Launched reduce tasks=1
+14/11/08 00:14:09 INFO mapred.JobClient:     Data-local map tasks=2
+14/11/08 00:14:09 INFO mapred.JobClient:     Total time spent by all maps in occupied slots (ms)=1110382
+14/11/08 00:14:09 INFO mapred.JobClient:     Total time spent by all reduces in occupied slots (ms)=198427
+14/11/08 00:14:09 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+14/11/08 00:14:09 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+14/11/08 00:14:09 INFO mapred.JobClient:   Map-Reduce Framework
+14/11/08 00:14:09 INFO mapred.JobClient:     Map input records=4138476
+14/11/08 00:14:09 INFO mapred.JobClient:     Map output records=4138476
+14/11/08 00:14:09 INFO mapred.JobClient:     Map output bytes=56372650
+14/11/08 00:14:09 INFO mapred.JobClient:     Input split bytes=278
+14/11/08 00:14:09 INFO mapred.JobClient:     Combine input records=0
+14/11/08 00:14:09 INFO mapred.JobClient:     Combine output records=0
+14/11/08 00:14:09 INFO mapred.JobClient:     Reduce input groups=103
+14/11/08 00:14:09 INFO mapred.JobClient:     Reduce shuffle bytes=22327221
+14/11/08 00:14:09 INFO mapred.JobClient:     Reduce input records=4138476
+14/11/08 00:14:09 INFO mapred.JobClient:     Reduce output records=103
+14/11/08 00:14:09 INFO mapred.JobClient:     Spilled Records=12415428
+14/11/08 00:14:09 INFO mapred.JobClient:     CPU time spent (ms)=84820
+14/11/08 00:14:09 INFO mapred.JobClient:     Physical memory (bytes) snapshot=449163264
+14/11/08 00:14:09 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=2014580736
+14/11/08 00:14:09 INFO mapred.JobClient:     Total committed heap usage (bytes)=193269760
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ hadoop jar sales2.jar SalesByRegion hdfssales-ip salesbyregion5-op
+
+14/11/08 00:20:50 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+14/11/08 00:20:58 INFO input.FileInputFormat: Total input paths to process : 1
+14/11/08 00:21:07 INFO mapred.JobClient: Running job: job_201411072154_0002
+14/11/08 00:21:10 INFO mapred.JobClient:  map 0% reduce 0%
+
+14/11/08 00:23:43 INFO mapred.JobClient:  map 3% reduce 0%
+14/11/08 00:23:50 INFO mapred.JobClient:  map 17% reduce 0%
+14/11/08 00:24:23 INFO mapred.JobClient:  map 25% reduce 0%
+14/11/08 00:24:25 INFO mapred.JobClient:  map 70% reduce 0%
+14/11/08 00:24:29 INFO mapred.JobClient:  map 98% reduce 0%
+14/11/08 00:24:33 INFO mapred.JobClient:  map 100% reduce 0%
+14/11/08 00:25:33 INFO mapred.JobClient:  map 100% reduce 67%
+14/11/08 00:25:35 INFO mapred.JobClient:  map 100% reduce 100%
+14/11/08 00:25:55 INFO mapred.JobClient: Job complete: job_201411072154_0002
+14/11/08 00:26:04 INFO mapred.JobClient: Counters: 32
+14/11/08 00:26:05 INFO mapred.JobClient:   File System Counters
+14/11/08 00:26:05 INFO mapred.JobClient:     FILE: Number of bytes read=20
+14/11/08 00:26:05 INFO mapred.JobClient:     FILE: Number of bytes written=494193
+14/11/08 00:26:05 INFO mapred.JobClient:     FILE: Number of read operations=0
+14/11/08 00:26:05 INFO mapred.JobClient:     FILE: Number of large read operations=0
+14/11/08 00:26:05 INFO mapred.JobClient:     FILE: Number of write operations=0
+14/11/08 00:26:05 INFO mapred.JobClient:     HDFS: Number of bytes read=211378738
+14/11/08 00:26:05 INFO mapred.JobClient:     HDFS: Number of bytes written=0
+14/11/08 00:26:05 INFO mapred.JobClient:     HDFS: Number of read operations=4
+14/11/08 00:26:05 INFO mapred.JobClient:     HDFS: Number of large read operations=0
+14/11/08 00:26:05 INFO mapred.JobClient:     HDFS: Number of write operations=1
+14/11/08 00:26:05 INFO mapred.JobClient:   Job Counters 
+14/11/08 00:26:05 INFO mapred.JobClient:     Launched map tasks=2
+14/11/08 00:26:05 INFO mapred.JobClient:     Launched reduce tasks=1
+14/11/08 00:26:05 INFO mapred.JobClient:     Data-local map tasks=2
+14/11/08 00:26:05 INFO mapred.JobClient:     Total time spent by all maps in occupied slots (ms)=372352
+14/11/08 00:26:05 INFO mapred.JobClient:     Total time spent by all reduces in occupied slots (ms)=55484
+14/11/08 00:26:05 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+14/11/08 00:26:05 INFO mapred.JobClient:   Map-Reduce Framework
+14/11/08 00:26:05 INFO mapred.JobClient:     Map input records=4138476
+14/11/08 00:26:05 INFO mapred.JobClient:     Map output records=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Map output bytes=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Input split bytes=278
+14/11/08 00:26:05 INFO mapred.JobClient:     Combine input records=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Combine output records=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Reduce input groups=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Reduce shuffle bytes=32
+14/11/08 00:26:05 INFO mapred.JobClient:     Reduce input records=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Reduce output records=0
+14/11/08 00:26:05 INFO mapred.JobClient:     Spilled Records=0
+14/11/08 00:26:05 INFO mapred.JobClient:     CPU time spent (ms)=33630
+14/11/08 00:26:05 INFO mapred.JobClient:     Physical memory (bytes) snapshot=354390016
+14/11/08 00:26:05 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=2006286336
+14/11/08 00:26:05 INFO mapred.JobClient:     Total committed heap usage (bytes)=169549824
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ 
+[cloudera@localhost Desktop]$ hadoop fs -cat salesbyregion5-op/part-r-00000
+[cloudera@localhost Desktop]$ hadoop fs -ls  salesbyregion5-op
+Found 3 items
+-rw-r--r--   3 cloudera cloudera          0 2014-11-08 00:25 salesbyregion5-op/_SUCCESS
+drwxr-xr-x   - cloudera cloudera          0 2014-11-08 00:21 salesbyregion5-op/_logs
+-rw-r--r--   3 cloudera cloudera          0 2014-11-08 00:25 salesbyregion5-op/part-r-00000
+[cloudera@localhost Desktop]$ hadoop fs -cat salesbyregion5-op/*
+cat: `salesbyregion5-op/_logs': Is a directory
+[cloudera@localhost Desktop]$ hadoop fs -cat salesbyregion5-op/p*
+[cloudera@localhost Desktop]$ hadoop fs -cat salesbyregion2-op/*
+cat: `salesbyregion2-op/_logs': Is a directory
+Albuquerque	1.0041243E7
+Anaheim	1.0065407E7
+Anchorage	9922290.0
+Arlington	1.0060922E7
+Atlanta	9985896.0
+Aurora	9981895.0
+Austin	1.0045976E7
+Bakersfield	1.0020146E7
+Baltimore	1.0085401E7
+Baton Rouge	1.0120166E7
+Birmingham	1.0065571E7
+Boise	1.0028085E7
+Boston	1.002833E7
+Buffalo	9990793.0
+Chandler	9908442.0
+Charlotte	1.0101404E7
+Chesapeake	1.0027413E7
+Chicago	1.0051437E7
+Chula Vista	9963843.0
+Cincinnati	1.0128421E7
+Cleveland	1.0056741E7
+Colorado Springs	1.0050044E7
+Columbus	1.0024227E7
+Corpus Christi	9965424.0
+Dallas	1.0055377E7
+Denver	1.0020503E7
+Detroit	9968126.0
+Durham	1.0142862E7
+El Paso	1.0005306E7
+Fort Wayne	1.0121533E7
+Fort Worth	1.0109848E7
+Fremont	1.0042184E7
+Fresno	9965132.0
+Garland	1.0060052E7
+Gilbert	1.0050998E7
+Glendale	1.0033371E7
+Greensboro	1.0022607E7
+Henderson	1.0042332E7
+Hialeah	1.0035947E7
+Honolulu	9995233.0
+Houston	1.0031013E7
+Indianapolis	1.0079167E7
+Irvine	1.0073763E7
+Irving	1.012278E7
+Jacksonville	1.0060892E7
+Jersey City	9909036.0
+Kansas City	9957076.0
+Laredo	1.013371E7
+Las Vegas	1.004314E7
+Lexington	1.0073419E7
+Lincoln	1.0058418E7
+Long Beach	9995353.0
+Los Angeles	1.0073537E7
+Louisville	9997502.0
+Lubbock	9947036.0
+Madison	1.0020999E7
+Memphis	1.0027472E7
+Mesa	1.0042535E7
+Miami	9936150.0
+Milwaukee	1.0053395E7
+Minneapolis	1.0000644E7
+Nashville	9950246.0
+New Orleans	9938082.0
+New York	1.0074229E7
+Newark	1.0132926E7
+Norfolk	1.0077566E7
+North Las Vegas	1.0018654E7
+Oakland	9936185.0
+Oklahoma City	1.0107985E7
+Omaha	1.0015432E7
+Orlando	1.0063828E7
+Philadelphia	1.017898E7
+Phoenix	1.006806E7
+Pittsburgh	1.0079005E7
+Plano	1.0035014E7
+Portland	9996341.0
+Raleigh	1.0050378E7
+Reno	1.0068836E7
+Richmond	9981903.0
+Riverside	9995634.0
+Rochester	1.0056607E7
+Sacramento	1.0112386E7
+Saint Paul	1.0046117E7
+San Antonio	1.0003383E7
+San Bernardino	9953988.0
+San Diego	9954816.0
+San Francisco	9984493.0
+San Jose	9925699.0
+Santa Ana	1.0039117E7
+Scottsdale	1.002683E7
+Seattle	9925248.0
+Spokane	1.0072286E7
+St. Louis	9991054.0
+St. Petersburg	9975336.0
+Stockton	9995380.0
+Tampa	1.0095409E7
+Toledo	1.0009599E7
+Tucson	9987276.0
+Tulsa	1.0053899E7
+Virginia Beach	1.0075534E7
+Washington	1.0128457E7
+Wichita	1.0072622E7
+Winston–Salem	1.0032985E7
+[cloudera@localhost Desktop]$ 
+
+
+
+
+
+
+
